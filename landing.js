@@ -35,7 +35,7 @@ function yesNo () {
 			$.ajax({
 				// DEMO PURPOSES
 				// HARDCODED IPS
-				url: "http://freegeoip.net/json/" + "128.177.113.106", //jsonIP.ip,
+				url: "https://freegeoip.net/json/" + "128.177.113.106", //jsonIP.ip,
 				dataType: "json",
 				async: false,
 				success: function(jsonPos){
