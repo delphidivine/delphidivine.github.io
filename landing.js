@@ -60,7 +60,7 @@ function yesNo () {
 					console.log(url)
 					$.ajax({
 					  url: url,
-					  dataType: 'json',
+					  dataType: 'jsonp',
 					  async: false,
 					  success: function(json) {
 					  	  try {
