@@ -36,8 +36,8 @@ function yesNo () {
 		success: function(jsonIP) {
 			$.ajax({
 				// DEMO PURPOSES
-				// HARDCODED IPS
-				url: "https://freegeoip.net/json/" + "128.177.113.106", //jsonIP.ip,
+				// HARDCODED IPS, BECAUSE MINE POINTS TO KANSAS :/
+				url: "https://freegeoip.net/json/" + "128.177.113.106", //jsonIP.ip works
 				dataType: "json",
 				async: false,
 				success: function(jsonPos){
