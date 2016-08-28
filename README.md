@@ -6,6 +6,6 @@ Delphi was made for the slash hack (/hack) hackthon by hackerearth on August 28,
 
 This was written in pure Javascript and JQuery with hopes to be rewritten in React Js in the future.
 
-Check Delphi out at delphidivine.github.io. :)
+Github owned by @ischang -- feel free to submit a pull request to suggest any new features. And check Delphi out at delphidivine.github.io. :)
 # Future Features
 List of events for meteor showers and eclipses and all that cool whatnot, along with locations to stargaze in your area. Also add list of stars and not just constellations.
