@@ -41,11 +41,11 @@ function yesNo () {
 				success: function(jsonPos){
 					var lat = jsonPos.latitude;
 					var long = jsonPos.longitude;
-					var urlStr = "https://api.openweathermap.org/data/2.5/forecast?"
+					var urlStr = "api.openweathermap.org/data/2.5/forecast?"
 					var coord = "lat=" + lat.toString() + "&lon=" + long.toString();
 					console.log(coord)
 					var API = "&APPID=d4eb7347018f72013868f80a6b93f3fa"
-					var url = "http://" + urlStr + coord + API
+					var url = "https://" + urlStr + coord + API
 					console.log(url)
 					$.ajax({
 					  url: url,
