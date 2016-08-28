@@ -24,6 +24,8 @@ var constellations =
             "NP" : ["Camelopardus", "Cassiopeia", "Cepheus", "Draco", "Ursa Major", "Ursa Minor"],
             "SP" : ["Apus", "Chamaeleon", "Circinus", "Crux", "Dorado", "Hydrus", "Mensa", "Musca", "Norma", "Octans", "Pavo", "Triangulum Australe", "Tucana", "Volans"]
     };
+var date = new Date();
+var month = date.getMonth() + 1;
 
 function yesNo () {
 	console.log("1")
@@ -41,11 +43,20 @@ function yesNo () {
 				success: function(jsonPos){
 					var lat = jsonPos.latitude;
 					var long = jsonPos.longitude;
-					var urlStr = "api.openweathermap.org/data/2.5/forecast?"
-					var coord = "lat=" + lat.toString() + "&lon=" + long.toString();
-					console.log(coord)
-					var API = "&APPID=d4eb7347018f72013868f80a6b93f3fa"
-					var url = "http://" + urlStr + coord + API
+					var urlStr = "https://api.forecast.io/forecast/"
+					var API = "e2ad790be5adaf179731d2d6cf04ee5f/"
+					if (month < 10) {
+						apiMonth = "0" + month.toString()
+					} else {
+						apiMonth = month.toString()
+					}
+					var time = date.getFullYear().toString() + "-" + apiMonth + "-" + date.getDate().toString() + "T21:00:00";
+					var url = urlStr + API + lat.toString() + "," + long.toString() + "," + time + "/";
+					// var urlStr = "api.openweathermap.org/data/2.5/forecast?"
+					// var coord = "lat=" + lat.toString() + "&lon=" + long.toString();
+					// console.log(coord)
+					// var API = "&APPID=d4eb7347018f72013868f80a6b93f3fa"
+					// var url = "http://" + urlStr + coord + API
 					console.log(url)
 					$.ajax({
 					  url: url,
@@ -53,76 +64,28 @@ function yesNo () {
 					  async: false,
 					  success: function(json) {
 					  	  try {
-					  	  	var dayData = json["list"];
+					  	  	var dayData = json["currently"];
 
-					  	  	for (var i = 0; i < 8; i++) {
-					  	  		var sysData = dayData[i]["sys"];
-					  	  		var podData = sysData["pod"];
-
-					  	  		if (podData == "n") {
-					  	  			var weatherArray = dayData[i]["weather"];
-					  	  			var currentWeatherId = weatherArray[0]["id"];
-					  	  			// Clear Skies
-
-					  	  			if (currentWeatherId == 800) {
-					  	  				console.log("Clear skies")
-					  	  				var mainObj = dayData[i]["main"];
-					  	  				var tempData = mainObj["temp"];
-					  	  				var fTemp = tempData * (1.8) - 459.67;
-					  	  				var roundTemp = Math.round(fTemp);
-
-
-					  					hemiSeason = region(long, lat);
-					  					replaceBody(hemiSeason, roundTemp, true);
-
-					  					break;
-					  	  			}
-
-					  	  			// Foggy Skies
-					  	  			else {
-					  	  				var mainObj = dayData[i]["main"];
-					  	  				var tempData = mainObj["temp"];
-					  	  				var fTemp = tempData * (1.8) - 459.67;
-					  	  				var roundTemp = Math.round(fTemp);
-
-					  	  				console.log ("Not clear")
-
-					  	  				hemiSeason = region(long, lat);
-					  	  				replaceBody(hemiSeason, roundTemp, false)
-
-					  	  				break;
-					  	  			}
-					  	  		}
+					  	  	if (dayData["summary"] == "Clear") {
+					  	  		console.log("Clear skies")
+					  	  		var roundTemp = Math.round(dayData["temperature"]);
+					  	  		hemiSeason = region(long, lat);
+					  			replaceBody(hemiSeason, roundTemp, true);
+					  	  	} else {
+					  	  		var roundTemp = Math.round(dayData["temperature"]);
+					  	  		console.log("Fog")
+					  	  		hemiSeason = region(long, lat);
+					  			replaceBody(hemiSeason, roundTemp, false);
 					  	  	}
 					  	  } catch (e) {
 					  	  	 console.log("error")
 					  	  }
 					  }
 					});
-
-				   	// $.getJSON(url,function(json){
-				   	//      document.write(JSON.stringify(json));
-				   	//  });
-
-					// if (weatherID == 800) {
-					// 	//go to page yes
-					// }
-
-					// else {
-					// 	//go to page no
-					// }
-
 				}
 			});
 		}
 	});
-
-//document.body.innerHTML
-
-
-// function error () {
-// 	console.log("error")
-// }
 }
 
 
@@ -130,9 +93,6 @@ function region (long, lat) {
 	var hemisphere = "";
 	var season = "";
 	var reg = "";
-
-	var date = new Date();
-	var month = date.getMonth();
 
 	// North Hem
 	if (lat >= 0) {
