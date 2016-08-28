@@ -45,7 +45,7 @@ function yesNo () {
 					var coord = "lat=" + lat.toString() + "&lon=" + long.toString();
 					console.log(coord)
 					var API = "&APPID=d4eb7347018f72013868f80a6b93f3fa"
-					var url = "https://" + urlStr + coord + API
+					var url = "http://" + urlStr + coord + API
 					console.log(url)
 					$.ajax({
 					  url: url,
